@@ -1,0 +1,23 @@
+name: Keepalive
+
+# GitHub pauses scheduled workflows after 60 days without repository activity.
+# This makes one empty commit a month so the Scorebug schedule never lapses.
+on:
+  schedule:
+    - cron: "17 6 1 * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Empty commit
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git commit --allow-empty -m "Keepalive: prevent GitHub from pausing scheduled workflows"
+          git push
