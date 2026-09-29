@@ -1,0 +1,76 @@
+name: Scorebug
+
+# Every 15 minutes, re-scrape mccthunder.com, re-render the two PNGs, and
+# republish them to GitHub Pages. The Populi News post points at the Pages URLs
+# and never has to be edited.
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+    paths:
+      - "scrape_mcc.py"
+      - "logos/**"
+      - "web/**"
+      - ".github/workflows/scorebug.yml"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never let a slow run overlap the next scheduled one, and never cancel a
+# deploy that is already in flight.
+concurrency:
+  group: scorebug
+  cancel-in-progress: false
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Install Chromium
+        run: playwright install --with-deps chromium
+
+      - name: Render the board
+        run: |
+          mkdir -p site
+          cp web/index.html site/index.html
+          python scrape_mcc.py \
+            --out site/scorebug.html \
+            --png site/scorebug.png \
+            --png-full site/scoreboard.png
+
+      # A render that produced nothing is worse than a stale board, because the
+      # Populi post would show a broken image to the whole college.
+      - name: Sanity-check the output
+        run: |
+          set -e
+          for f in site/scorebug.png site/scoreboard.png; do
+            test -s "$f" || { echo "::error::$f is missing or empty"; exit 1; }
+            size=$(stat -c%s "$f")
+            test "$size" -gt 10000 || { echo "::error::$f is only ${size}B, render probably failed"; exit 1; }
+          done
+          echo "scorebug.png $(stat -c%s site/scorebug.png)B, scoreboard.png $(stat -c%s site/scoreboard.png)B"
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - id: deploy
+        uses: actions/deploy-pages@v4

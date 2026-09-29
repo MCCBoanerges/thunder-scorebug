@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MCC Thunder Scoreboard</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: Kanit, "Helvetica Neue", Arial, sans-serif;
+    background: #002052; color: #FFFFFF; -webkit-font-smoothing: antialiased;
+  }
+  /* Total height must stay at or under 146px: that is the max-height Populi's
+     .truncation_block puts on a news item in the Home feed. */
+  .wrap { width: 760px; }
+
+  header {
+    display: flex; align-items: center; gap: 10px;
+    background: #FFFFFF; padding: 5px 12px;
+    border-bottom: 3px solid #A3BCDB;
+  }
+  header .brand { height: 28px; width: auto; display: block; }
+  header .tag {
+    font-size: 10px; font-weight: 600; letter-spacing: .16em;
+    color: #002052; text-transform: uppercase;
+    padding-left: 10px; border-left: 1px solid #ADAFB1;
+  }
+  header .stamp { margin-left: auto; font-size: 9px; color: rgba(0, 32, 82, .55); }
+
+  .tiles { display: flex; gap: 5px; padding: 8px 12px 10px; }
+  .tile {
+    flex: 1 1 0; min-width: 0; height: 86px; overflow: hidden;
+    background: rgba(255, 255, 255, .11); border-top: 2px solid #A3BCDB;
+    padding: 6px 8px 9px; display: flex; flex-direction: column;
+  }
+  .tile.next { border-top-color: rgba(173, 175, 177, .5); background: rgba(0, 0, 0, .18); }
+
+  .tile .sport {
+    font-size: 8px; letter-spacing: .1em; text-transform: uppercase;
+    color: #A3BCDB; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    flex: 0 0 auto;
+  }
+  .tile.next .sport { color: #ADAFB1; }
+
+  /* 32px slot: the site's logos are 70px, so this stays crisp at 2x and no
+     larger. Anything above 35px starts upscaling. */
+  /* min-height:0 lets the name block shrink instead of shoving the sport
+     label out of the top of a fixed-height tile. */
+  .who {
+    display: flex; align-items: center; gap: 6px; margin-top: 4px;
+    flex: 1 1 auto; min-height: 0;
+  }
+  .who img { flex: 0 0 26px; width: 26px; height: 26px; object-fit: contain; }
+  .who .nm {
+    font-size: 10px; font-weight: 600; line-height: 1.1; text-transform: uppercase;
+    display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .who .nm .site { color: #A3BCDB; font-weight: 400; }
+
+  .line { display: flex; align-items: center; gap: 5px; white-space: nowrap; flex: 0 0 auto; }
+  .line .when { font-size: 9px; color: #A3BCDB; letter-spacing: .04em; }
+  .badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 15px; height: 15px; border-radius: 2px;
+    font-size: 10px; font-weight: 700; line-height: 1;
+  }
+  .badge.win { background: #FFFFFF; color: #002052; }
+  .badge.loss { background: #000000; color: #A3BCDB; }
+  .badge.tie { background: #ADAFB1; color: #002052; }
+  .score { font-size: 13px; font-weight: 700; }
+  .at { font-size: 12px; font-weight: 600; color: #FFFFFF; margin-left: auto; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img class="brand" src="/home/claude/scorebug/logos/mcc-thunder.png" alt="MCC Thunder">
+    <span class="tag">Scoreboard</span>
+    <span class="stamp">Updated Sep 14, 8:15 AM</span>
+  </header>
+  <div class="tiles">
+    <div class="tile">
+      <div class="sport">M SOCCER</div>
+      <div class="who"><img src="https://mccthunder.com/themes/mccthunder2020/images/teams/emmaus.png" alt="" onerror="this.style.visibility='hidden'"><div class="nm"><span class="site">AT</span> EMMAUS UNIVERSITY</div></div>
+      <div class="line"><span class="when">FRI SEP 11</span><span class="badge win">W</span><span class="score">5-4</span></div>
+    </div>
+    <div class="tile">
+      <div class="sport">M SOCCER</div>
+      <div class="who"><img src="https://mccthunder.com/themes/mccthunder2020/images/teams/faithb.png" alt="" onerror="this.style.visibility='hidden'"><div class="nm"><span class="site">AT</span> FAITH BAPTIST BIBLE COLLEGE</div></div>
+      <div class="line"><span class="when">SAT SEP 12</span><span class="badge loss">L</span><span class="score">0-5</span></div>
+    </div>
+    <div class="tile next">
+      <div class="sport">W GOLF</div>
+      <div class="who"><img src="/home/claude/scorebug/logos/cottey.png" alt="" onerror="this.style.visibility='hidden'"><div class="nm"><span class="site">AT</span> COTTEY COLLEGE</div></div>
+      <div class="line"><span class="when">SEP 14-15</span><span class="at">9:00 AM</span></div>
+    </div>
+    <div class="tile next">
+      <div class="sport">M SOCCER</div>
+      <div class="who"><img src="https://mccthunder.com/themes/mccthunder2020/images/teams/kanscc.png" alt="" onerror="this.style.visibility='hidden'"><div class="nm"><span class="site">AT</span> KANSAS CHRISTIAN COLLEGE</div></div>
+      <div class="line"><span class="when">TUE SEP 15</span><span class="at">1:00 PM</span></div>
+    </div>
+    <div class="tile next">
+      <div class="sport">W VOLLEYBALL</div>
+      <div class="who"><img src="/home/claude/scorebug/logos/cbusai.png" alt="" onerror="this.style.visibility='hidden'"><div class="nm"><span class="site">VS.</span> CENTRAL BIBLE UNIVERSITY</div></div>
+      <div class="line"><span class="when">TUE SEP 15</span><span class="at">6:00 PM</span></div>
+    </div>
+    <div class="tile next">
+      <div class="sport">W VOLLEYBALL</div>
+      <div class="who"><img src="/home/claude/scorebug/logos/sterlc.png" alt="" onerror="this.style.visibility='hidden'"><div class="nm"><span class="site">VS.</span> STERLING COLLEGE</div></div>
+      <div class="line"><span class="when">FRI SEP 18</span><span class="at">6:00 PM</span></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MCC Thunder Scoreboard</title>
+<style>
+  :root { color-scheme: dark; }
+  body {
+    margin: 0; padding: 24px 16px;
+    background: #002052; color: #fff;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    display: flex; flex-direction: column; align-items: center; gap: 20px;
+  }
+  img { max-width: 100%; height: auto; display: block; }
+  .note {
+    max-width: 760px; width: 100%;
+    font-size: 12px; line-height: 1.6; color: #A3BCDB;
+  }
+  .note a { color: #fff; }
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    background: rgba(255,255,255,.1); padding: 1px 4px; border-radius: 3px;
+  }
+</style>
+</head>
+<body>
+  <img src="scorebug.png" alt="MCC Thunder scoreboard: latest results and upcoming games" width="760">
+  <img src="scoreboard.png" alt="Full MCC Thunder scoreboard" width="760">
+  <p class="note">
+    These two images are rebuilt every 15 minutes from
+    <a href="https://mccthunder.com/">mccthunder.com</a> and hot-linked by the
+    Thunder Scoreboard post on the Populi home page. Link to
+    <code>scorebug.png</code> and <code>scoreboard.png</code> in this directory
+    rather than saving copies, so whatever you embed stays current.
+  </p>
+</body>
+</html>
